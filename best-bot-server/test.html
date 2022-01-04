@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> -->
+
+</head>
+
+<body>
+    <button onclick="openWS()">open</button>
+    <button onclick="closeWS()">close</button>
+    <button onclick="send()">send</button>
+    <div id="content" style="width: 600px;height: 600px;"></div>
+    <div id="content1" style="width: 600px;height: 600px;"></div>
+
+    <script>
+        var socket;
+        function openWS() {
+            console.log("socket已连接");
+            socket = new WebSocket('ws://localhost:3000/home/startTrade');
+            const params = {
+                "websocket": "wss://speedy-nodes-nyc.moralis.io/d081512ca64f88a8712cc680/bsc/testnet/ws",
+                "privateKey": "5a68efabf2a8bd509f92b936d07a8e4028c471f7428db584621a73e4c315baa6",
+                "chain": "bsc",
+                "dex": "pancakeswapV2",
+                "tokenTobuy": "0x76d8c4c65fe90c8c653a946aae95ba3ad92dbee9",
+                "gasPrice": "5",
+                "amountToBuy": "0.1",
+                "tradeNum": "2",
+                "liquidityMinValue": "0.1"
+            }
+            socket.onopen=function(){
+                socket.send(JSON.stringify(params));
+            }
+            const content = document.getElementById('content');
+            const content1 = document.getElementById('content1');
+            socket.onmessage = (m => {
+                const data=m.data
+                if(data.startsWith('监听')){
+                    content.innerHTML = data;
+                }else{
+                content1.innerHTML += data;
+                }
+            })
+        }
+        function closeWS() {
+            console.log("socket已关闭");
+            socket.close();
+            socket = null;
+        }
+        function send() {
+            socket.send('123');
+        }
+
+
+
+    </script>
+</body>
+
+</html>
