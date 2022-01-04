@@ -352,9 +352,9 @@ const obj = {
         chainAndExchanges: [],
       },
       mainRpc:
-        "wss://bsc.getblock.io/mainnet/?api_key=59781869-08f6-4efd-84ff-404e335c2870",
+        "",
       privateKey:
-        "f4247283ff23af55660612b04ee2e732a7b4d328ced623d4b2f45b97617e26bf",
+        "",
       buyGasPrice: "5",
       sellGasPrice: "10",
       amountToBuy: "0.1",
